@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('ROLE_SECRETARIO')")
  */
 class DependenciaController extends Controller
 {
