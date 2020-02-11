@@ -21,6 +21,7 @@ class DependenciaType extends AbstractType
             ->add('responsables', EntityType::class, [
                 'label' => 'Personas responsables de la dependencia',
                 'class' => Usuario::class,
+                'disabled' => $options['modificar_responsables'] === false,
                 'multiple' => true,
                 'expanded' => true
             ]);
@@ -29,7 +30,8 @@ class DependenciaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Dependencia::class
+            'data_class' => Dependencia::class,
+            'modificar_responsables' => false
         ]);
     }
 
