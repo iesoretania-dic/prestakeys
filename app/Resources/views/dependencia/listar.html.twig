@@ -17,9 +17,19 @@
         <tbody>
         {% for dependencia in dependencias %}
             <tr>
-                <td><a href="{{ path('dependencia_form', {'id': dependencia.id}) }}">{{ dependencia.descripcion }}</a></td>
+                <td>
+                    {% if is_granted('DEPENDENCIA_ACCEDER', dependencia) %}
+                        <a href="{{ path('dependencia_form', {'id': dependencia.id}) }}">{{ dependencia.descripcion }}</a>
+                    {% else %}
+                        {{ dependencia.descripcion }}
+                    {% endif %}
+                </td>
                 <td>{{ dependencia.responsables|join(', ')|default('No tiene') }}</td>
-                <td><a href="{{ path('dependencia_llaves_listar', {'id': dependencia.id}) }}" class="btn btn-sm btn-info"><i class="fa fa-key"></i> Llaves</a></td>
+                <td>
+                    {% if is_granted('DEPENDENCIA_ACCEDER', dependencia) %}
+                        <a href="{{ path('dependencia_llaves_listar', {'id': dependencia.id}) }}" class="btn btn-sm btn-info"><i class="fa fa-key"></i> Llaves</a>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>

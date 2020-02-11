@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Security("is_granted('ROLE_SECRETARIO')")
+ * @Security("is_granted('DEPENDENCIA_MOSTRAR_SECCION')")
  */
 class DependenciaController extends Controller
 {
@@ -30,6 +30,7 @@ class DependenciaController extends Controller
 
     /**
      * @Route("/dependencia/llaves/{id}", name="dependencia_llaves_listar")
+     * @Security("is_granted('DEPENDENCIA_ACCEDER', dependencia)")
      */
     public function llavesAction(LlaveRepository $llaveRepository, Dependencia $dependencia)
     {
@@ -44,7 +45,7 @@ class DependenciaController extends Controller
     /**
      * @Route("/dependencia/nueva", name="dependencia_nueva",
      *      methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_SECRETARIO')")
+     * @Security("is_granted('DEPENDENCIA_CREAR')")
      */
     public function nuevaAction(Request $request)
     {
@@ -57,11 +58,12 @@ class DependenciaController extends Controller
     /**
      * @Route("/dependencia/{id}", name="dependencia_form",
      *      requirements={"id"="\d+"}, methods={"GET", "POST"})
+     * @Security("is_granted('DEPENDENCIA_ACCEDER', dependencia)")
      */
     public function formAction(Request $request, Dependencia $dependencia)
     {
         $formulario = $this->createForm(DependenciaType::class, $dependencia, [
-            'disabled' => $this->isGranted('ROLE_SECRETARIO') === false
+            'disabled' => $this->isGranted('DEPENDENCIA_CAMBIAR', $dependencia) === false
         ]);
         $formulario->handleRequest($request);
 
@@ -84,11 +86,11 @@ class DependenciaController extends Controller
 
     /**
      * @Route("/dependencia/eliminar/{id}", name="dependencia_eliminar", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_SECRETARIO')")
+     * @Security("is_granted('DEPENDENCIA_ELIMINAR', dependencia)")
      */
     public function eliminarAction(Request $request, Dependencia $dependencia)
     {
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() === 'POST') {
             try {
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($dependencia);
