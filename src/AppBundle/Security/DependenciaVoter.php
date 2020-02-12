@@ -2,6 +2,7 @@
 
 namespace AppBundle\Security;
 
+use AppBundle\Entity\Dependencia;
 use AppBundle\Entity\Usuario;
 use AppBundle\Repository\DependenciaRepository;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -12,6 +13,7 @@ class DependenciaVoter extends Voter
 {
 
     const DEPENDENCIA_MOSTRAR_SECCION = 'DEPENDENCIA_MOSTRAR_SECCION';
+    const DEPENDENCIA_ACCEDER = 'DEPENDENCIA_ACCEDER';
 
     private $accessDecisionManager;
     private $dependenciaRepository;
@@ -31,7 +33,8 @@ class DependenciaVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if ($attribute === self::DEPENDENCIA_MOSTRAR_SECCION) {
+        if ($attribute === self::DEPENDENCIA_MOSTRAR_SECCION ||
+            $attribute === self::DEPENDENCIA_ACCEDER) {
             return true;
         }
 
@@ -58,6 +61,28 @@ class DependenciaVoter extends Voter
 
             // 2. es responsable de, al menos, una dependencia
             if ($this->dependenciaRepository->countByUsuarioResponsable($usuario) > 0) {
+                return true;
+            }
+
+            return false;
+        }
+
+        if ($attribute === self::DEPENDENCIA_ACCEDER) {
+
+            // comprobar si $subject es una Dependencia
+            if (!$subject instanceof Dependencia) {
+                return false;
+            }
+
+            // se puede acceder a la dependencia $subject
+            // si se cumple alguna de estas condiciones:
+            // 1. el usuario tiene el rol de ROLE_GESTOR_PRESTAMOS
+            if ($this->accessDecisionManager->decide($token, ['ROLE_GESTOR_PRESTAMOS'])) {
+                return true;
+            }
+
+            // 2. es responsable de $subject
+            if ($subject->getResponsables()->contains($usuario)) {
                 return true;
             }
 

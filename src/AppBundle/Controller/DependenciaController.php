@@ -30,6 +30,7 @@ class DependenciaController extends Controller
 
     /**
      * @Route("/dependencia/llaves/{id}", name="dependencia_llaves_listar")
+     * @Security("is_granted('DEPENDENCIA_ACCEDER', dependencia)")
      */
     public function llavesAction(LlaveRepository $llaveRepository, Dependencia $dependencia)
     {
@@ -57,6 +58,7 @@ class DependenciaController extends Controller
     /**
      * @Route("/dependencia/{id}", name="dependencia_form",
      *      requirements={"id"="\d+"}, methods={"GET", "POST"})
+     * @Security("is_granted('DEPENDENCIA_ACCEDER', dependencia)")
      */
     public function formAction(Request $request, Dependencia $dependencia)
     {
