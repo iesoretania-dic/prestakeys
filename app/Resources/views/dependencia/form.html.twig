@@ -17,9 +17,9 @@
     <a href="{{ path('dependencia_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver al listado</a>
     {% if is_granted('ROLE_SECRETARIO') %}
         <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Guardar cambios</button>
-        {% if dependencia.id %}
-            <a href="{{ path('dependencia_eliminar', {'id': dependencia.id}) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar dependencia</a>
-        {% endif %}
+    {% endif %}
+    {% if dependencia.id and is_granted('DEPENDENCIA_ELIMINAR', dependencia) %}
+        <a href="{{ path('dependencia_eliminar', {'id': dependencia.id}) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar dependencia</a>
     {% endif %}
     {{ form_end(formulario) }}
 {% endblock %}

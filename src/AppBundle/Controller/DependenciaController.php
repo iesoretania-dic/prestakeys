@@ -86,7 +86,7 @@ class DependenciaController extends Controller
 
     /**
      * @Route("/dependencia/eliminar/{id}", name="dependencia_eliminar", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_SECRETARIO')")
+     * @Security("is_granted('DEPENDENCIA_ELIMINAR', dependencia)")
      */
     public function eliminarAction(Request $request, Dependencia $dependencia)
     {

@@ -15,6 +15,7 @@ class DependenciaVoter extends Voter
     const DEPENDENCIA_MOSTRAR_SECCION = 'DEPENDENCIA_MOSTRAR_SECCION';
     const DEPENDENCIA_ACCEDER = 'DEPENDENCIA_ACCEDER';
     const DEPENDENCIA_CREAR = 'DEPENDENCIA_CREAR';
+    const DEPENDENCIA_ELIMINAR = 'DEPENDENCIA_ELIMINAR';
 
     private $accessDecisionManager;
     private $dependenciaRepository;
@@ -37,7 +38,8 @@ class DependenciaVoter extends Voter
         if (in_array($attribute, [
             self::DEPENDENCIA_MOSTRAR_SECCION,
             self::DEPENDENCIA_ACCEDER,
-            self::DEPENDENCIA_CREAR
+            self::DEPENDENCIA_CREAR,
+            self::DEPENDENCIA_ELIMINAR
         ], true)) {
             return true;
         }
@@ -56,6 +58,7 @@ class DependenciaVoter extends Voter
             return false;
         }
 
+        // Atributos que NO dependen de $subject
         switch ($attribute) {
             case self::DEPENDENCIA_MOSTRAR_SECCION:
                 // mostrar el menú si se cumple alguna de estas condiciones:
@@ -76,26 +79,45 @@ class DependenciaVoter extends Voter
                 return $this->accessDecisionManager->decide($token, ['ROLE_SECRETARIO']);
         }
 
-        if ($attribute === self::DEPENDENCIA_ACCEDER) {
+        // Atributos que SÍ dependen de $subject
 
-            // comprobar si $subject es una Dependencia
-            if (!$subject instanceof Dependencia) {
-                return false;
-            }
-
-            // se puede acceder a la dependencia $subject
-            // si se cumple alguna de estas condiciones:
-            // 1. el usuario tiene el rol de ROLE_GESTOR_PRESTAMOS
-            if ($this->accessDecisionManager->decide($token, ['ROLE_GESTOR_PRESTAMOS'])) {
-                return true;
-            }
-
-            // 2. es responsable de $subject
-            if ($subject->getResponsables()->contains($usuario)) {
-                return true;
-            }
-
+        // comprobar si $subject es una Dependencia
+        if (!$subject instanceof Dependencia) {
             return false;
+        }
+
+        switch ($attribute) {
+            case self::DEPENDENCIA_ACCEDER:
+                // se puede acceder a la dependencia $subject
+                // si se cumple alguna de estas condiciones:
+                // 1. el usuario tiene el rol de ROLE_GESTOR_PRESTAMOS
+                if ($this->accessDecisionManager->decide($token, ['ROLE_GESTOR_PRESTAMOS'])) {
+                    return true;
+                }
+
+                // 2. es responsable de $subject
+                if ($subject->getResponsables()->contains($usuario)) {
+                    return true;
+                }
+
+                return false;
+
+            case self::DEPENDENCIA_ELIMINAR:
+                // se puede eliminar la dependencia $subject
+                // si se cumple alguna de estas condiciones:
+                // 1. el usuario tiene el rol de Secretario
+                if ($this->accessDecisionManager->decide($token, ['ROLE_SECRETARIO'])) {
+                    return true;
+                }
+
+                // 2. es "gestor de préstamos" Y es el único responsable
+                if ($this->accessDecisionManager->decide($token, ['ROLE_GESTOR_PRESTAMOS'])
+                    && $subject->getResponsables()->contains($usuario)
+                    && $subject->getResponsables()->count() === 1) {
+                    return true;
+                }
+
+                return false;
         }
 
         return false;

@@ -4,6 +4,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -37,7 +38,7 @@ class Dependencia
 
     /**
      * @ORM\ManyToMany(targetEntity="Usuario")
-     * @var Usuario[]
+     * @var Usuario[]|Collection
      */
     private $responsables;
 
@@ -101,7 +102,7 @@ class Dependencia
     }
 
     /**
-     * @return Usuario[]
+     * @return Usuario[]|Collection
      */
     public function getResponsables()
     {
