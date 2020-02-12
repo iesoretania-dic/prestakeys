@@ -14,6 +14,7 @@ class DependenciaVoter extends Voter
 
     const DEPENDENCIA_MOSTRAR_SECCION = 'DEPENDENCIA_MOSTRAR_SECCION';
     const DEPENDENCIA_ACCEDER = 'DEPENDENCIA_ACCEDER';
+    const DEPENDENCIA_CREAR = 'DEPENDENCIA_CREAR';
 
     private $accessDecisionManager;
     private $dependenciaRepository;
@@ -33,8 +34,11 @@ class DependenciaVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if ($attribute === self::DEPENDENCIA_MOSTRAR_SECCION ||
-            $attribute === self::DEPENDENCIA_ACCEDER) {
+        if (in_array($attribute, [
+            self::DEPENDENCIA_MOSTRAR_SECCION,
+            self::DEPENDENCIA_ACCEDER,
+            self::DEPENDENCIA_CREAR
+        ], true)) {
             return true;
         }
 
@@ -52,19 +56,24 @@ class DependenciaVoter extends Voter
             return false;
         }
 
-        if ($attribute === self::DEPENDENCIA_MOSTRAR_SECCION) {
-            // mostrar el menú si se cumple alguna de estas condiciones:
-            // 1. el usuario tiene el rol de ROLE_GESTOR_PRESTAMOS
-            if ($this->accessDecisionManager->decide($token, ['ROLE_GESTOR_PRESTAMOS'])) {
+        switch ($attribute) {
+            case self::DEPENDENCIA_MOSTRAR_SECCION:
+                // mostrar el menú si se cumple alguna de estas condiciones:
+                // 1. el usuario tiene el rol de ROLE_GESTOR_PRESTAMOS
+                if ($this->accessDecisionManager->decide($token, ['ROLE_GESTOR_PRESTAMOS'])) {
                 return true;
-            }
+                }
 
-            // 2. es responsable de, al menos, una dependencia
-            if ($this->dependenciaRepository->countByUsuarioResponsable($usuario) > 0) {
-                return true;
-            }
+                // 2. es responsable de, al menos, una dependencia
+                if ($this->dependenciaRepository->countByUsuarioResponsable($usuario) > 0) {
+                    return true;
+                }
 
-            return false;
+                return false;
+
+            case self::DEPENDENCIA_CREAR:
+                // solamente el rol de secretario
+                return $this->accessDecisionManager->decide($token, ['ROLE_SECRETARIO']);
         }
 
         if ($attribute === self::DEPENDENCIA_ACCEDER) {

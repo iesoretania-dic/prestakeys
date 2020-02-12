@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Listado de dependencias {% if is_granted('ROLE_SECRETARIO') %}<a href="{{ path('dependencia_nueva') }}" class="btn btn-success"><i class="fa fa-plus"></i> Nueva dependencia</a>{% endif %}</h1>
+    <h1>Listado de dependencias {% if is_granted('DEPENDENCIA_CREAR') %}<a href="{{ path('dependencia_nueva') }}" class="btn btn-success"><i class="fa fa-plus"></i> Nueva dependencia</a>{% endif %}</h1>
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>

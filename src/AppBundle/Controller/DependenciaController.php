@@ -45,7 +45,7 @@ class DependenciaController extends Controller
     /**
      * @Route("/dependencia/nueva", name="dependencia_nueva",
      *      methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_SECRETARIO')")
+     * @Security("is_granted('DEPENDENCIA_CREAR')")
      */
     public function nuevaAction(Request $request)
     {
