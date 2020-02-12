@@ -15,7 +15,7 @@
     {{ form_start(formulario) }}
     {{ form_widget(formulario) }}
     <a href="{{ path('dependencia_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver al listado</a>
-    {% if is_granted('ROLE_SECRETARIO') %}
+    {% if is_granted('DEPENDENCIA_MODIFICAR', dependencia) %}
         <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Guardar cambios</button>
     {% endif %}
     {% if dependencia.id and is_granted('DEPENDENCIA_ELIMINAR', dependencia) %}

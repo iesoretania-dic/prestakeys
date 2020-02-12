@@ -16,6 +16,7 @@ class DependenciaVoter extends Voter
     const DEPENDENCIA_ACCEDER = 'DEPENDENCIA_ACCEDER';
     const DEPENDENCIA_CREAR = 'DEPENDENCIA_CREAR';
     const DEPENDENCIA_ELIMINAR = 'DEPENDENCIA_ELIMINAR';
+    const DEPENDENCIA_MODIFICAR = 'DEPENDENCIA_MODIFICAR';
 
     private $accessDecisionManager;
     private $dependenciaRepository;
@@ -39,7 +40,8 @@ class DependenciaVoter extends Voter
             self::DEPENDENCIA_MOSTRAR_SECCION,
             self::DEPENDENCIA_ACCEDER,
             self::DEPENDENCIA_CREAR,
-            self::DEPENDENCIA_ELIMINAR
+            self::DEPENDENCIA_ELIMINAR,
+            self::DEPENDENCIA_MODIFICAR
         ], true)) {
             return true;
         }
@@ -118,6 +120,11 @@ class DependenciaVoter extends Voter
                 }
 
                 return false;
+
+            case self::DEPENDENCIA_MODIFICAR:
+                // se puede modificar la dependencia $subject
+                // si el usuario tiene el rol de Secretario
+                return $this->accessDecisionManager->decide($token, ['ROLE_SECRETARIO']);
         }
 
         return false;

@@ -63,7 +63,7 @@ class DependenciaController extends Controller
     public function formAction(Request $request, Dependencia $dependencia)
     {
         $formulario = $this->createForm(DependenciaType::class, $dependencia, [
-            'disabled' => $this->isGranted('ROLE_SECRETARIO') === false
+            'disabled' => $this->isGranted('DEPENDENCIA_MODIFICAR', $dependencia) === false
         ]);
         $formulario->handleRequest($request);
 
