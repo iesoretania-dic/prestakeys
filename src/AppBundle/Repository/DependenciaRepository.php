@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Dependencia;
+use AppBundle\Entity\Usuario;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -20,5 +21,15 @@ class DependenciaRepository extends ServiceEntityRepository
             ->orderBy('d.descripcion')
             ->getQuery()
             ->getResult();
+    }
+
+    public function countByUsuarioResponsable(Usuario $usuario)
+    {
+        return $this->createQueryBuilder('d')
+            ->select('COUNT(d)')
+            ->where(':usuario MEMBER OF d.responsables')
+            ->setParameter('usuario', $usuario)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
