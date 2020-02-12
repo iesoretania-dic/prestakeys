@@ -22,14 +22,16 @@ class DependenciaType extends AbstractType
                 'label' => 'Personas responsables de la dependencia',
                 'class' => Usuario::class,
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                'disabled' => $options['modificar_responsables'] === false
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Dependencia::class
+            'data_class' => Dependencia::class,
+            'modificar_responsables' => false
         ]);
     }
 

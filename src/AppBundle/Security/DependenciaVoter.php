@@ -17,6 +17,7 @@ class DependenciaVoter extends Voter
     const DEPENDENCIA_CREAR = 'DEPENDENCIA_CREAR';
     const DEPENDENCIA_ELIMINAR = 'DEPENDENCIA_ELIMINAR';
     const DEPENDENCIA_MODIFICAR = 'DEPENDENCIA_MODIFICAR';
+    const DEPENDENCIA_MODIFICAR_RESPONSABLES = 'DEPENDENCIA_MODIFICAR_RESPONSABLES';
 
     private $accessDecisionManager;
     private $dependenciaRepository;
@@ -41,7 +42,8 @@ class DependenciaVoter extends Voter
             self::DEPENDENCIA_ACCEDER,
             self::DEPENDENCIA_CREAR,
             self::DEPENDENCIA_ELIMINAR,
-            self::DEPENDENCIA_MODIFICAR
+            self::DEPENDENCIA_MODIFICAR,
+            self::DEPENDENCIA_MODIFICAR_RESPONSABLES
         ], true)) {
             return true;
         }
@@ -122,8 +124,21 @@ class DependenciaVoter extends Voter
                 return false;
 
             case self::DEPENDENCIA_MODIFICAR:
-                // se puede modificar la dependencia $subject
-                // si el usuario tiene el rol de Secretario
+                // se puede modificar la dependencia $subject (salvo los responsables)
+                // 1. Un usuario con rol de secretario
+                if ($this->accessDecisionManager->decide($token, ['ROLE_SECRETARIO'])) {
+                    return true;
+                }
+
+                // 2. Usuario con rol de gestor de préstamos y es que sea responsable
+                // de la dependencia
+                if ($this->accessDecisionManager->decide($token, ['ROLE_GESTOR_PRESTAMOS'])
+                    && $subject->getResponsables()->contains($usuario)) {
+                    return true;
+                }
+                return false;
+
+            case self::DEPENDENCIA_MODIFICAR_RESPONSABLES:
                 return $this->accessDecisionManager->decide($token, ['ROLE_SECRETARIO']);
         }
 
