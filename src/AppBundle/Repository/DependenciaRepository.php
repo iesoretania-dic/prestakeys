@@ -14,11 +14,16 @@ class DependenciaRepository extends ServiceEntityRepository
         parent::__construct($registry, Dependencia::class);
     }
 
-    public function findAllOrdenadas()
+    public function findAllOrdenadasQueryBuilder()
     {
         return $this->createQueryBuilder('d')
             ->select('d')
-            ->orderBy('d.descripcion')
+            ->orderBy('d.descripcion');
+    }
+
+    public function findAllOrdenadas()
+    {
+        return $this->findAllOrdenadasQueryBuilder()
             ->getQuery()
             ->getResult();
     }

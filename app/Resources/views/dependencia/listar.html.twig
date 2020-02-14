@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for dependencia in dependencias %}
+        {% for dependencia in paginador.currentPageResults %}
             <tr>
                 <td>
                     {% if is_granted('DEPENDENCIA_ACCEDER', dependencia) %}
@@ -35,6 +35,10 @@
         {% endfor %}
         </tbody>
     </table>
+    {% if paginador and paginador.haveToPaginate %}
+        {{ pagerfanta(paginador, 'twitter_bootstrap4') }}
+    {% endif %}
+
 {% endblock %}
 
 

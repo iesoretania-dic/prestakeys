@@ -6,6 +6,9 @@ use AppBundle\Entity\Dependencia;
 use AppBundle\Form\Type\DependenciaType;
 use AppBundle\Repository\DependenciaRepository;
 use AppBundle\Repository\LlaveRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Exception\OutOfRangeCurrentPageException;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,14 +20,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class DependenciaController extends Controller
 {
     /**
-     * @Route("/dependencias", name="dependencia_listar")
+     * @Route("/dependencias/{page}", name="dependencia_listar")
      */
-    public function indexAction(DependenciaRepository $dependenciaRepository)
+    public function indexAction(DependenciaRepository $dependenciaRepository, $page = 1)
     {
-        $dependencias = $dependenciaRepository->findAllOrdenadas();
+        $dependenciasQueryBuilder = $dependenciaRepository->findAllOrdenadasQueryBuilder();
+        $adaptador = new DoctrineORMAdapter($dependenciasQueryBuilder, false);
+        $pager = new Pagerfanta($adaptador);
+        try {
+            $pager
+                ->setMaxPerPage(5)
+                ->setCurrentPage($page);
+        } catch (OutOfRangeCurrentPageException $e) {
+            $pager->setCurrentPage(1);
+        }
+
 
         return $this->render('dependencia/listar.html.twig', [
-            'dependencias' => $dependencias
+            'paginador' => $pager
         ]);
     }
 
