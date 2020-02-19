@@ -1,0 +1,31 @@
+<html>
+<body>
+    <h1>Llaves prestadas</h1>
+    <table style="border: 1px solid black">
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Dependencia</th>
+            <th>Descripción</th>
+            <th>Prestada a</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for llave in llaves %}
+            <tr>
+                <td>
+                    {{ llave.codigo }}
+                </td>
+                <td>{{ llave.dependencia }}</td>
+                <td>{{ llave.descripcion }}</td>
+                <td>
+                    {% if llave.usuario %}
+                        {{ llave.usuario }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

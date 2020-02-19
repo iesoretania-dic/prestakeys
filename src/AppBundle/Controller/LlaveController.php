@@ -11,6 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use TFox\MpdfPortBundle\Service\MpdfService;
+use Twig\Environment;
 
 /**
  * @Security("is_granted('ROLE_GESTOR_PRESTAMOS')")
@@ -159,5 +161,19 @@ class LlaveController extends Controller
         return $this->render('llave/prestar_form.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/llave/informe", name="llave_informe", methods={"GET"})
+     */
+    public function informeAction(Request $request, LlaveRepository $llaveRepository, Environment $twig)
+    {
+        $llaves = $llaveRepository->findPrestadasOrdenadasPorCodigo();
+        $mpdfService = new MpdfService();
+        $html = $twig->render('llave/prestadas_informe.html.twig', [
+            'llaves' => $llaves
+        ]);
+
+        return $mpdfService->generatePdfResponse($html);
     }
 }
