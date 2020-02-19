@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SeguridadController extends Controller
 {
     /**
-     * @Route("/entrar", name="usuario_entrar")
+     * @Route("/{_locale}/entrar", name="usuario_entrar")
      */
     public function indexAction(AuthenticationUtils $authUtils)
     {

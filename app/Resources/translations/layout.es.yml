@@ -1,0 +1,9 @@
+app.name: PrestaKeys
+menu.frontpage: Portada
+menu.keys: Llaves
+menu.rooms: Dependencias
+menu.users: Usuarios
+navbar.hello: Hola
+navbar.logout: Salir
+navbar.login: Entrar
+

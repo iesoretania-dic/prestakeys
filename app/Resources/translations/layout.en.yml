@@ -1,0 +1,9 @@
+app.name: PrestaKeys
+menu.frontpage: Frontpage
+menu.keys: Keys
+menu.rooms: Rooms
+menu.users: Users
+navbar.hello: Hi
+navbar.logout: Logout
+navbar.login: Login
+

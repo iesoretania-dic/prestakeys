@@ -1,34 +1,35 @@
 {% extends 'base.html.twig' %}
+{% trans_default_domain 'layout' %}
 
 {% block body %}
     <nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark">
-        <a class="navbar-brand" href="{{ path('portada') }}"><i class="fas fa-key"></i> PrestaKeys</a>
+        <a class="navbar-brand" href="{{ path('portada') }}"><i class="fas fa-key"></i> {{'app.name'|trans }}</a>
         {% set nombre = app.request.get('_route') %}
         <ul class="navbar-nav mr-auto">
             <li{% if nombre == 'portada' %} class="active"{% endif %}>
-                <a class="nav-link" href="{{ path('portada') }}"><i class="fas fa-home"></i> Portada</a>
+                <a class="nav-link" href="{{ path('portada') }}"><i class="fas fa-home"></i> {{ 'menu.frontpage'|trans }}</a>
             </li>
             {% if is_granted('ROLE_GESTOR_PRESTAMOS') %}
             <li{% if nombre starts with 'llave' %} class="active"{% endif %}>
-                <a class="nav-link" href="{{ path('llave_listar') }}"><i class="fas fa-key"></i> Llaves</a>
+                <a class="nav-link" href="{{ path('llave_listar') }}"><i class="fas fa-key"></i> {{ 'menu.keys'|trans }}</a>
             </li>
             {% endif %}
             {% if is_granted('DEPENDENCIA_MOSTRAR_SECCION') %}
             <li{% if nombre starts with 'dependencia' %} class="active"{% endif %}>
-                <a class="nav-link" href="{{ path('dependencia_listar') }}"><i class="fas fa-door-open"></i> Dependencias</a>
+                <a class="nav-link" href="{{ path('dependencia_listar') }}"><i class="fas fa-door-open"></i> {{ 'menu.rooms'|trans }}</a>
             </li>
             {% endif %}
             {% if is_granted('ROLE_SECRETARIO') %}
                 <li{% if nombre starts with 'usuario' %} class="active"{% endif %}>
-                <a class="nav-link" href="{{ path('usuario_listar') }}"><i class="fas fa-users"></i> Usuarios</a>
+                <a class="nav-link" href="{{ path('usuario_listar') }}"><i class="fas fa-users"></i> {{ 'menu.users'|trans }}</a>
             </li>
             {% endif %}
         </ul>
         {% if app.user %}
-            <span class="navbar-text">¡Hola <a href="{{ path('usuario_perfil') }}">{{ app.user.nombre }}</a>!</span>
-            <a href="{{ path('usuario_salir') }}" class="ml-3 btn btn-primary"><i class="fas fa-power-off"></i> Salir</a>
+            <span class="navbar-text">{{ 'navbar.hello'|trans }} <a href="{{ path('usuario_perfil') }}">{{ app.user.nombre }}</a></span>
+            <a href="{{ path('usuario_salir') }}" class="ml-3 btn btn-primary"><i class="fas fa-power-off"></i> {{ 'navbar.logout'|trans }}</a>
         {% else %}
-            <a href="{{ path('usuario_entrar') }}" class="btn btn-primary"><i class="fas fa-door-open"></i> Entrar</a>
+            <a href="{{ path('usuario_entrar') }}" class="btn btn-primary"><i class="fas fa-door-open"></i> {{'navbar.login'|trans }}</a>
         {% endif %}
     </nav>
     <div class="container">
