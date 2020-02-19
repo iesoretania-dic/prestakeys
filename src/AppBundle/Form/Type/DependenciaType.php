@@ -16,10 +16,10 @@ class DependenciaType extends AbstractType
     {
         $builder
             ->add('descripcion', TextType::class, [
-                'label' => 'Descripción'
+                'label' => 'form.descripcion'
             ])
             ->add('responsables', EntityType::class, [
-                'label' => 'Personas responsables de la dependencia',
+                'label' => 'form.responsables',
                 'class' => Usuario::class,
                 'multiple' => true,
                 'expanded' => true,
@@ -31,6 +31,7 @@ class DependenciaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Dependencia::class,
+            'translation_domain' => 'dependencia',
             'modificar_responsables' => false
         ]);
     }
