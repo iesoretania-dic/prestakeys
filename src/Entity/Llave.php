@@ -2,24 +2,35 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity()
+ */
 class Llave
 {
     /**
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      */
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=20)
      * @var string
      */
     private $codigo;
 
     /**
+     * @ORM\Column(type="string", length=60)
      * @var string
      */
     private $descripcion;
 
     /**
+     * @ORM\Column(type="boolean")
      * @var bool
      */
     private $disponible;
