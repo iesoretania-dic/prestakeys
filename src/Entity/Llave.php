@@ -57,6 +57,12 @@ class Llave
      */
     private $departamento;
 
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @var ?\DateTimeImmutable
+     */
+    private $fechaHoraPrestamo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -133,6 +139,17 @@ class Llave
     {
         $this->departamento = $departamento;
 
+        return $this;
+    }
+
+    public function getFechaHoraPrestamo(): ?\DateTimeImmutable
+    {
+        return $this->fechaHoraPrestamo;
+    }
+
+    public function setFechaHoraPrestamo(?\DateTimeImmutable $fechaHoraPrestamo): self
+    {
+        $this->fechaHoraPrestamo = $fechaHoraPrestamo;
         return $this;
     }
 }
