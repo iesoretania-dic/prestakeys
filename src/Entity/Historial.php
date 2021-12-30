@@ -30,6 +30,27 @@ class Historial
      */
     private $fechaHoraDevolucion;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Llave")
+     * @ORM\JoinColumn(nullable=false)
+     * @var ?Llave
+     */
+    private $llave;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\JoinColumn(nullable=false)
+     * @var ?Empleado
+     */
+    private $prestadaA;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\JoinColumn(nullable=false)
+     * @var ?Empleado
+     */
+    private $prestadaPor;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,6 +76,42 @@ class Historial
     public function setFechaHoraDevolucion(?\DateTimeImmutable $fechaHoraDevolucion): self
     {
         $this->fechaHoraDevolucion = $fechaHoraDevolucion;
+
+        return $this;
+    }
+
+    public function getLlave(): ?Llave
+    {
+        return $this->llave;
+    }
+
+    public function setLlave(?Llave $llave): self
+    {
+        $this->llave = $llave;
+
+        return $this;
+    }
+
+    public function getPrestadaA(): ?Empleado
+    {
+        return $this->prestadaA;
+    }
+
+    public function setPrestadaA(?Empleado $prestadaA): self
+    {
+        $this->prestadaA = $prestadaA;
+
+        return $this;
+    }
+
+    public function getPrestadaPor(): ?Empleado
+    {
+        return $this->prestadaPor;
+    }
+
+    public function setPrestadaPor(?Empleado $prestadaPor): self
+    {
+        $this->prestadaPor = $prestadaPor;
 
         return $this;
     }
