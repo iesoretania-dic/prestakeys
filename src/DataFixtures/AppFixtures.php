@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Factory\DepartamentoFactory;
 use App\Factory\EmpleadoFactory;
+use App\Factory\HistorialFactory;
 use App\Factory\LlaveFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -43,6 +44,10 @@ class AppFixtures extends Fixture
 
             return $item;
         });
+
+        HistorialFactory::createMany(200, [
+            'prestadaPor' => $ordenanza,
+        ]);
 
         $manager->flush();
     }
