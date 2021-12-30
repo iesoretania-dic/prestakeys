@@ -36,6 +36,20 @@ class Llave
      */
     private $disponible;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Empleado", inversedBy="llaves")
+     * @ORM\JoinColumn(nullable=true)
+     * @var ?Empleado
+     */
+    private $prestadaA;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\JoinColumn(nullable=true)
+     * @var ?Empleado
+     */
+    private $prestadaPor;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +85,35 @@ class Llave
     public function setDisponible(bool $disponible): self
     {
         $this->disponible = $disponible;
+        return $this;
+    }
+
+    public function getDisponible(): ?bool
+    {
+        return $this->disponible;
+    }
+
+    public function getPrestadaA(): ?Empleado
+    {
+        return $this->prestadaA;
+    }
+
+    public function setPrestadaA(?Empleado $prestadaA): self
+    {
+        $this->prestadaA = $prestadaA;
+
+        return $this;
+    }
+
+    public function getPrestadaPor(): ?Empleado
+    {
+        return $this->prestadaPor;
+    }
+
+    public function setPrestadaPor(?Empleado $prestadaPor): self
+    {
+        $this->prestadaPor = $prestadaPor;
+
         return $this;
     }
 }

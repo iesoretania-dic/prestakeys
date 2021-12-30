@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EmpleadoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +44,17 @@ class Empleado
      */
     private $secretario;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Llave", mappedBy="prestadaA")
+     * @var Llave[]|Collection
+     */
+    private $llaves;
+
+    public function __construct()
+    {
+        $this->llaves = new ArrayCollection();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +104,36 @@ class Empleado
     public function setSecretario(bool $secretario): self
     {
         $this->secretario = $secretario;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Llave[]
+     */
+    public function getLlaves(): Collection
+    {
+        return $this->llaves;
+    }
+
+    public function addLlave(Llave $llave): self
+    {
+        if (!$this->llaves->contains($llave)) {
+            $this->llaves[] = $llave;
+            $llave->setPrestadaA($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLlave(Llave $llave): self
+    {
+        if ($this->llaves->removeElement($llave)) {
+            // set the owning side to null (unless already changed)
+            if ($llave->getPrestadaA() === $this) {
+                $llave->setPrestadaA(null);
+            }
+        }
 
         return $this;
     }
