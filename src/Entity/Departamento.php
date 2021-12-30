@@ -32,6 +32,13 @@ class Departamento
      */
     private $llaves;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\JoinColumn(nullable=true)
+     * @var ?Empleado
+     */
+    private $jefatura;
+
     public function __construct()
     {
         $this->llaves = new ArrayCollection();
@@ -80,6 +87,18 @@ class Departamento
                 $llave->setDepartamento(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getJefatura(): ?Empleado
+    {
+        return $this->jefatura;
+    }
+
+    public function setJefatura(?Empleado $jefatura): self
+    {
+        $this->jefatura = $jefatura;
 
         return $this;
     }
