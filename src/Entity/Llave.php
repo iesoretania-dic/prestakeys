@@ -50,6 +50,13 @@ class Llave
      */
     private $prestadaPor;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Departamento", inversedBy="llaves")
+     * @ORM\JoinColumn(nullable=true)
+     * @var ?Departamento
+     */
+    private $departamento;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -113,6 +120,18 @@ class Llave
     public function setPrestadaPor(?Empleado $prestadaPor): self
     {
         $this->prestadaPor = $prestadaPor;
+
+        return $this;
+    }
+
+    public function getDepartamento(): ?Departamento
+    {
+        return $this->departamento;
+    }
+
+    public function setDepartamento(?Departamento $departamento): self
+    {
+        $this->departamento = $departamento;
 
         return $this;
     }
