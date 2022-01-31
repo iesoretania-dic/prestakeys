@@ -15,7 +15,11 @@
         <tbody>
             {% for departamento in departamentos %}
                 <tr>
-                    <td>{{ departamento.descripcion }}</td>
+                    <td>
+                        <a href="{{ path('departamento_llaves', { 'id': departamento.id }) }}">
+                            {{ departamento.descripcion }}
+                        </a>
+                    </td>
                     <td>
                         {# departamento.jefatura ?: '---' #}
                         {{ departamento.jefatura | default('---') }}

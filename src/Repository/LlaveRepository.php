@@ -20,4 +20,19 @@ class LlaveRepository extends ServiceEntityRepository
         parent::__construct($registry, Llave::class);
     }
 
+    public function findByDepartamentoOrdenadas(?Departamento $departamento) : array
+    {
+        $qb = $this->createQueryBuilder('l')
+            ->orderBy('l.codigo');
+
+        if ($departamento) {
+            $qb
+                ->where('l.departamento = :departamento')
+                ->setParameter('departamento', $departamento);
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
 }

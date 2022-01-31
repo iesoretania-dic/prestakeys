@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Llaves de departamentos - {{ parent() }}{% endblock %}
+
+{% block content %}
+    <h1>Listado de llaves de {{ departamento }}</h1>
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Prestada a</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for llave in llaves %}
+                <tr>
+                    <td>{{ llave.codigo }}</td>
+                    <td>{{ llave.descripcion }}</td>
+                    <td>
+                        {{ llave.prestadaA | default('Sin prestar') }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
