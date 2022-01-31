@@ -17,11 +17,8 @@
                 <tr>
                     <td>{{ departamento.descripcion }}</td>
                     <td>
-                        {% if departamento.jefatura %}
-                            {{ departamento.jefatura.nombre }} {{ departamento.jefatura.apellidos }}
-                        {% else %}
-                            ---
-                        {% endif %}
+                        {# departamento.jefatura ?: '---' #}
+                        {{ departamento.jefatura | default('---') }}
                     </td>
                 </tr>
             {% endfor %}

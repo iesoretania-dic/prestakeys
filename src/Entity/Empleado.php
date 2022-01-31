@@ -54,7 +54,13 @@ class Empleado
     {
         $this->llaves = new ArrayCollection();
     }
-    
+
+    public function __toString()
+    {
+        return $this->nombre . ' ' . $this->apellidos;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
