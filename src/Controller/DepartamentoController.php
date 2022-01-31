@@ -9,10 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/departamento")
+ */
 class DepartamentoController extends AbstractController
 {
     /**
-     * @Route("/departamento", name="departamento_listar")
+     * @Route("", name="departamento_listar")
      */
     public function index(DepartamentoRepository $departamentoRepository): Response
     {
@@ -22,7 +25,7 @@ class DepartamentoController extends AbstractController
         ]);
     }
     /**
-     * @Route("/departamento/llaves/{id}", name="departamento_llaves")
+     * @Route("/llaves/{id}", name="departamento_llaves")
      */
     public function llaves(
         LlaveRepository $llaveRepository,
