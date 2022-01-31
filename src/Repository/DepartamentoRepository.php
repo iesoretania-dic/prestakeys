@@ -34,7 +34,9 @@ class DepartamentoRepository extends ServiceEntityRepository
             ->select('d AS departamento')
             ->addSelect('COUNT(l) AS numero')
             ->addSelect('COUNT(l.prestadaA) AS prestadas')
+            ->addSelect('j')
             ->join('d.llaves', 'l')
+            ->leftJoin('d.jefatura', 'j')
             ->groupBy('d')
             ->getQuery()
             ->getResult();
