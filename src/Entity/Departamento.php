@@ -44,6 +44,11 @@ class Departamento
         $this->llaves = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->descripcion;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
