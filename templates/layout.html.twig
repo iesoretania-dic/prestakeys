@@ -2,14 +2,15 @@
 
 {% block body %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"><i class="fa fa-key"></i> PrestaKeys</a>
+        <a class="navbar-brand" href="{{ path('principal') }}"><i class="fa fa-key"></i> PrestaKeys</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        {% set route_name = app.request.get('_route') %}
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fa fa-home"></i> Inicio <span class="sr-only">(current)</span></a>
+                <li class="nav-item {% if route_name == 'principal' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('principal') }}"><i class="fa fa-home"></i> Inicio <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fa fa-hockey-puck"></i> Llaves</a>
@@ -18,7 +19,7 @@
                     <a class="nav-link" href="#"><i class="fa fa-users"></i> Empleados</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('departamento_listar') }}"><i class="fa fa-door-open"></i> Departamentos</a>
+                    <a class="nav-link {% if route_name starts with 'departamento' %}active{% endif %}" href="{{ path('departamento_listar') }}"><i class="fa fa-door-open"></i> Departamentos</a>
                 </li>
             </ul>
         </div>
