@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Departamento;
+use App\Entity\Llave;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,10 +31,11 @@ class DepartamentoRepository extends ServiceEntityRepository
     public function findAllOrdenadosConEstadistica() : array
     {
         return $this->createQueryBuilder('d')
-            ->select('d AS departamento, SIZE(d.llaves) AS numero, j')
+            ->select('d AS departamento')
+            ->addSelect('COUNT(l) AS numero')
+            ->addSelect('COUNT(l.prestadaA) AS prestadas')
             ->join('d.llaves', 'l')
-            ->leftJoin('d.jefatura', 'j')
-            ->orderBy('d.descripcion')
+            ->groupBy('d')
             ->getQuery()
             ->getResult();
     }
