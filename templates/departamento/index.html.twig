@@ -1,0 +1,30 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Departamentos - {{ parent() }}{% endblock %}
+
+{% block content %}
+    <h1>Listado de departamentos</h1>
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Jefatura de departamento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for departamento in departamentos %}
+                <tr>
+                    <td>{{ departamento.descripcion }}</td>
+                    <td>
+                        {% if departamento.jefatura %}
+                            {{ departamento.jefatura.nombre }} {{ departamento.jefatura.apellidos }}
+                        {% else %}
+                            ---
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

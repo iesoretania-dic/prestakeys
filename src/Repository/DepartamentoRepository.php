@@ -19,4 +19,11 @@ class DepartamentoRepository extends ServiceEntityRepository
         parent::__construct($registry, Departamento::class);
     }
 
+    public function findAllOrdenados() : array
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.descripcion')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -39,7 +39,7 @@ final class DepartamentoFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'descripcion' => self::faker()->text(),
+            'descripcion' => self::faker()->text(20),
         ];
     }
 
