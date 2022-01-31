@@ -17,11 +17,13 @@
             <tr>
                 <th>Nombre</th>
                 <th>Jefatura de departamento</th>
+                <th>Núm. llaves</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for departamento in departamentos %}
+            {% for elemento in departamentos %}
+                {% set departamento = elemento.departamento %}
                 <tr>
                     <td>
                         {{ departamento.descripcion }}
@@ -29,6 +31,9 @@
                     <td>
                         {# departamento.jefatura ?: '---' #}
                         {{ departamento.jefatura | default('---') }}
+                    </td>
+                    <td>
+                        {{ elemento.numero }}
                     </td>
                     <td>
                         <a href="{{ path('departamento_llaves', { 'id': departamento.id }) }}" class="btn btn-sm btn-info"> <i class="fa fa-key"></i> Mostrar llaves

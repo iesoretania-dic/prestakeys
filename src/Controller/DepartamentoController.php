@@ -19,7 +19,7 @@ class DepartamentoController extends AbstractController
      */
     public function index(DepartamentoRepository $departamentoRepository): Response
     {
-        $departamentos = $departamentoRepository->findAllOrdenados();
+        $departamentos = $departamentoRepository->findAllOrdenadosConEstadistica();
         return $this->render('departamento/index.html.twig', [
             'departamentos' => $departamentos
         ]);

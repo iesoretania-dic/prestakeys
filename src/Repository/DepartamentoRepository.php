@@ -26,4 +26,15 @@ class DepartamentoRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllOrdenadosConEstadistica() : array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d AS departamento, SIZE(d.llaves) AS numero, j')
+            ->join('d.llaves', 'l')
+            ->leftJoin('d.jefatura', 'j')
+            ->orderBy('d.descripcion')
+            ->getQuery()
+            ->getResult();
+    }
 }
