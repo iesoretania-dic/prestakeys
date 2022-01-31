@@ -3,6 +3,13 @@
 {% block title %}Departamentos - {{ parent() }}{% endblock %}
 
 {% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ path('principal') }}"><i class="fa fa-home"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Departamentos</li>
+        </ol>
+    </nav>
+
     <h1>Listado de departamentos</h1>
 
     <table class="table table-bordered table-hover table-striped">

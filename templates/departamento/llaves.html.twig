@@ -3,6 +3,14 @@
 {% block title %}Llaves de departamentos - {{ parent() }}{% endblock %}
 
 {% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ path('principal') }}"><i class="fa fa-home"></i></a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ path('departamento_listar') }}">Departamentos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ departamento }}</li>
+        </ol>
+    </nav>
+
     <h1>Listado de llaves de {{ departamento }}</h1>
 
     <table class="table table-bordered table-hover table-striped">
