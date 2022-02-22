@@ -24,7 +24,7 @@
         <tbody>
             {% for llave in llaves %}
                 <tr>
-                    <td>{{ llave.codigo }}</td>
+                    <td><a href="{{ path('llave_form', {'id': llave.id }) }}">{{ llave.codigo }}</a></td>
                     <td>{{ llave.descripcion }}</td>
                     <td>
                         {{ llave.prestadaA | default('Sin prestar') }}
