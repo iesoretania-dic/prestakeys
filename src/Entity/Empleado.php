@@ -50,6 +50,19 @@ class Empleado
      */
     private $llaves;
 
+    /**
+     * @ORM\Column(type="string", unique=true)
+     * @var string
+     */
+    private $nombreUsuario;
+
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $clave;
+
     public function __construct()
     {
         $this->llaves = new ArrayCollection();
@@ -141,6 +154,28 @@ class Empleado
             }
         }
 
+        return $this;
+    }
+
+    public function getNombreUsuario(): ?string
+    {
+        return $this->nombreUsuario;
+    }
+
+    public function setNombreUsuario(string $nombreUsuario): self
+    {
+        $this->nombreUsuario = $nombreUsuario;
+        return $this;
+    }
+
+    public function getClave(): ?string
+    {
+        return $this->clave;
+    }
+
+    public function setClave(string $clave): self
+    {
+        $this->clave = $clave;
         return $this;
     }
 }

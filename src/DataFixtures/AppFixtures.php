@@ -16,12 +16,14 @@ class AppFixtures extends Fixture
         $secretario = EmpleadoFactory::new()->create([
                                            'nombre' => 'Secretario',
                                            'apellidos' => 'IES',
-                                           'secretario' => true
+                                           'secretario' => true,
+                                           'nombreUsuario' => 'secretario'
                                        ]);
         $ordenanza = EmpleadoFactory::new()->create([
                                            'nombre' => 'Ordenanza',
                                            'apellidos' => 'IES',
-                                           'ordenanza' => true
+                                           'ordenanza' => true,
+                                           'nombreUsuario' => 'ordenanza'
                                        ]);
 
         EmpleadoFactory::createMany(30);
