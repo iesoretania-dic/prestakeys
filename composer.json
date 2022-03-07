@@ -17,6 +17,7 @@
         "symfony/framework-bundle": "4.4.*",
         "symfony/maker-bundle": "^1.36",
         "symfony/proxy-manager-bridge": "4.4.*",
+        "symfony/security-bundle": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
         "symfony/webpack-encore-bundle": "^1.13",
         "symfony/yaml": "4.4.*",
