@@ -1,14 +1,23 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory: { memory: null }
+        base_de_datos:
+            entity:
+              class: 'App\Entity\Empleado'
+              property: nombreUsuario
+    encoders:
+        App\Entity\Empleado: plaintext
+    role_hierarchy:
+        ROLE_ORDENANZA: [ROLE_USUARIO, ROLE_GESTOR_PRESTAMOS]
+        ROLE_SECRETARIO: [ROLE_DOCENTE, ROLE_GESTOR_PRESTAMOS]
+        ROLE_DOCENTE: [ROLE_USUARIO]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: lazy
-            provider: users_in_memory
+            provider: base_de_datos
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

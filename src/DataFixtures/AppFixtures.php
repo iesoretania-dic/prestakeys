@@ -25,6 +25,12 @@ class AppFixtures extends Fixture
                                            'ordenanza' => true,
                                            'nombreUsuario' => 'ordenanza'
                                        ]);
+        $docente = EmpleadoFactory::new()->create([
+                                           'nombre' => 'Docente',
+                                           'apellidos' => 'IES',
+                                           'docente' => true,
+                                           'nombreUsuario' => 'docente'
+                                       ]);
 
         EmpleadoFactory::createMany(30);
 

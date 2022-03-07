@@ -43,6 +43,7 @@ final class EmpleadoFactory extends ModelFactory
             'apellidos' => self::faker()->lastName() . ' ' . self::faker()->lastName(),
             'ordenanza' => false,
             'secretario' => false,
+            'docente' => false,
             'nombreUsuario' => self::faker()->unique()->userName(),
             'clave' => 'pordefecto'
         ];

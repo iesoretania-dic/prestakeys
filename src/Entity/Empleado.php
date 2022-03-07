@@ -6,11 +6,12 @@ use App\Repository\EmpleadoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=EmpleadoRepository::class)
  */
-class Empleado
+class Empleado implements UserInterface
 {
     /**
      * @ORM\Id
@@ -43,6 +44,12 @@ class Empleado
      * @var ?bool
      */
     private $secretario;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var ?bool
+     */
+    private $docente;
 
     /**
      * @ORM\OneToMany(targetEntity="Llave", mappedBy="prestadaA")
@@ -127,6 +134,18 @@ class Empleado
         return $this;
     }
 
+    public function isDocente(): ?bool
+    {
+        return $this->docente;
+    }
+
+    public function setDocente(bool $docente): self
+    {
+        $this->docente = $docente;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Llave[]
      */
@@ -177,5 +196,46 @@ class Empleado
     {
         $this->clave = $clave;
         return $this;
+    }
+
+    public function getRoles()
+    {
+        $roles = [
+            'ROLE_USUARIO',
+            'ROLE_EMPLEADO'
+        ];
+
+        if ($this->isOrdenanza()) {
+            $roles[] = 'ROLE_ORDENANZA';
+        }
+
+        if ($this->isSecretario()) {
+            $roles[] = 'ROLE_SECRETARIO';
+        }
+
+        if ($this->isDocente()) {
+            $roles[] = 'ROLE_DOCENTE';
+        }
+
+        return $roles;
+    }
+
+    public function getPassword()
+    {
+        return $this->getClave();
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->getNombreUsuario();
+    }
+
+    public function eraseCredentials()
+    {
     }
 }
