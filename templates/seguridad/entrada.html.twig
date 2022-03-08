@@ -2,8 +2,13 @@
 
 {% block content %}
     <h1>¡Bienvenido a PrestaKeys!</h1>
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.message }}
+        </div>
+    {% endif %}
     <form class="form" method="post">
-        <input type="text" name="_username" placeholder="Introduce nombre de usuario" class="form-control">
+        <input type="text" name="_username" placeholder="Introduce nombre de usuario" class="form-control" value="{{ ultimo_usuario }}">
         <input type="password" name="_password" placeholder="Introduce la contraseña" class="form-control">
         <button type="submit" class="btn btn-success">Entrar en la aplicación</button>
     </form>
