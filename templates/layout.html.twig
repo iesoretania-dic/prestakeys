@@ -21,6 +21,11 @@
                 <li class="nav-item">
                     <a class="nav-link {% if route_name starts with 'departamento' %}active{% endif %}" href="{{ path('departamento_listar') }}"><i class="fa fa-door-open"></i> Departamentos</a>
                 </li>
+                {% if app.user %}
+                    <a href="{{ path('seguridad_logout') }}" class="nav-link">Conectado como {{ app.user }}. Salir</a>
+                {% else %}
+                    <a href="{{ path('seguridad_login') }}" class="nav-link">Entrar</a>
+                {% endif %}
             </ul>
         </div>
     </nav>
