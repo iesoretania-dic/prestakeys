@@ -6,7 +6,7 @@ security:
               class: 'App\Entity\Empleado'
               property: nombreUsuario
     encoders:
-        App\Entity\Empleado: plaintext
+        App\Entity\Empleado: bcrypt
     role_hierarchy:
         ROLE_ORDENANZA: [ROLE_USUARIO, ROLE_GESTOR_PRESTAMOS]
         ROLE_SECRETARIO: [ROLE_DOCENTE, ROLE_GESTOR_PRESTAMOS, ROLE_JEFATURA_DEPARTAMENTO]
