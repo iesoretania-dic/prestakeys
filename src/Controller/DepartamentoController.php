@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Departamento;
 use App\Repository\DepartamentoRepository;
 use App\Repository\LlaveRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/departamento")
+ * @Security("is_granted('ROLE_EMPLEADO')")
  */
 class DepartamentoController extends AbstractController
 {

@@ -34,4 +34,7 @@
         </tbody>
     </table>
     <a href="{{ path('departamento_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver al listado de departamentos</a>
+    {% if is_granted('CREAR_LLAVE', departamento) %}
+        <a href="" class="btn btn-success"><i class="fa fa-plus"></i> Crear llave</a>
+    {% endif %}
 {% endblock %}

@@ -12,6 +12,7 @@
                 <li class="nav-item {% if route_name == 'principal' %}active{% endif %}">
                     <a class="nav-link" href="{{ path('principal') }}"><i class="fa fa-home"></i> Inicio <span class="sr-only">(current)</span></a>
                 </li>
+                {% if is_granted('ROLE_EMPLEADO') %}
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fa fa-hockey-puck"></i> Llaves</a>
                 </li>
@@ -21,6 +22,7 @@
                 <li class="nav-item">
                     <a class="nav-link {% if route_name starts with 'departamento' %}active{% endif %}" href="{{ path('departamento_listar') }}"><i class="fa fa-door-open"></i> Departamentos</a>
                 </li>
+                {% endif %}
                 {% if app.user %}
                     <a href="{{ path('seguridad_logout') }}" class="nav-link">Conectado como {{ app.user }}. Salir</a>
                 {% else %}
