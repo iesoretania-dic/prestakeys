@@ -33,7 +33,7 @@ class Departamento
     private $llaves;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\ManyToOne(targetEntity="Empleado", inversedBy="departamentos")
      * @ORM\JoinColumn(nullable=true)
      * @var ?Empleado
      */

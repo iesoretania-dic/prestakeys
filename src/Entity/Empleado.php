@@ -46,23 +46,22 @@ class Empleado implements UserInterface
     private $secretario;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @var ?bool
-     */
-    private $docente;
-
-    /**
      * @ORM\OneToMany(targetEntity="Llave", mappedBy="prestadaA")
      * @var Llave[]|Collection
      */
     private $llaves;
 
     /**
+     * @ORM\OneToMany(targetEntity="Departamento", mappedBy="jefatura")
+     * @var Departamento[]|Collection
+     */
+    private $departamentos;
+
+    /**
      * @ORM\Column(type="string", unique=true)
      * @var string
      */
     private $nombreUsuario;
-
 
     /**
      * @ORM\Column(type="string")
@@ -73,6 +72,7 @@ class Empleado implements UserInterface
     public function __construct()
     {
         $this->llaves = new ArrayCollection();
+        $this->departamentos = new ArrayCollection();
     }
 
     public function __toString()
@@ -134,18 +134,6 @@ class Empleado implements UserInterface
         return $this;
     }
 
-    public function isDocente(): ?bool
-    {
-        return $this->docente;
-    }
-
-    public function setDocente(bool $docente): self
-    {
-        $this->docente = $docente;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Llave[]
      */
@@ -170,6 +158,36 @@ class Empleado implements UserInterface
             // set the owning side to null (unless already changed)
             if ($llave->getPrestadaA() === $this) {
                 $llave->setPrestadaA(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Departamento[]
+     */
+    public function getDepartamentos(): Collection
+    {
+        return $this->departamentos;
+    }
+
+    public function addDepartamento(Departamento $departamento): self
+    {
+        if (!$this->departamentos->contains($departamento)) {
+            $this->departamentos[] = $departamento;
+            $departamento->setJefatura($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDepartamento(Departamento $departamento): self
+    {
+        if ($this->departamentos->removeElement($departamento)) {
+            // set the owning side to null (unless already changed)
+            if ($departamento->getJefatura() === $this) {
+                $departamento->setJefatura(null);
             }
         }
 
@@ -213,8 +231,8 @@ class Empleado implements UserInterface
             $roles[] = 'ROLE_SECRETARIO';
         }
 
-        if ($this->isDocente()) {
-            $roles[] = 'ROLE_DOCENTE';
+        if ($this->getDepartamentos()->count() > 0) {
+            $roles[] = 'ROLE_JEFATURA_DEPARTAMENTO';
         }
 
         return $roles;
